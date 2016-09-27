@@ -7,5 +7,5 @@ mysql -u root -p -h 127.0.0.1 -D glud -e "select concat(usuario,':',password_has
 
 #http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html
 echo $((`date --utc --date "$1" +%s`/86400))
-./sql2shadow.sh funcionarios.txt > funcionarios.shadow
-./sql2shadow.sh estudiantes.txt > estudiantes.shadow
+./sql2shadow.sh funcionarios.txt | tee funcionarios.shadow
+./sql2shadow.sh estudiantes.txt | tee estudiantes.shadow
