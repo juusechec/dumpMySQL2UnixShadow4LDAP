@@ -1,0 +1,11 @@
+docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=glud -e MYSQL_DATABASE=glud mysql/mysql-server:latest
+mysql -u root -p -h 127.0.0.1 -D glud < dump_estudiantes.sql
+mysql -u root -p -h 127.0.0.1 -D glud -e "select concat(usuario,':',password_hash) from password_hash;" | tee estudiantes.txt
+
+mysql -u root -p -h 127.0.0.1 -D glud < dump_funcionarios.sql
+mysql -u root -p -h 127.0.0.1 -D glud -e "select concat(usuario,':',password_hash) from password_hash;" | tee funcionarios.txt
+
+#http://www.tldp.org/LDP/lame/LAME/linux-admin-made-easy/shadow-file-formats.html
+echo $((`date --utc --date "$1" +%s`/86400))
+./sql2shadow.sh funcionarios.txt > funcionarios.shadow
+./sql2shadow.sh estudiantes.txt > estudiantes.shadow
